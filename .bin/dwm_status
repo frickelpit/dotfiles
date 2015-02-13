@@ -1,0 +1,75 @@
+#!/bin/bash
+# DWM status script
+# Colors: 1 = normal, 2 = selected, 3 = urgent, 5 = green, 6 = yellow, 7 = red, 8 = blue, 9 = cyan
+
+dte(){
+dte="$(date "+%H:%M")"
+echo -e "\x08\x01$dte"
+}
+
+bat(){
+perc="$(</sys/class/power_supply/BAT0/capacity)"
+online="$(</sys/class/power_supply/ADP1/online)"
+if [[ $online -eq 0 && $perc -le 10 ]]; then
+   echo -e "\x07\x01$perc%"
+elif [[ $online -eq 0 && $perc -le 30 ]]; then
+   echo -e "\x08\x01$perc%"
+elif [[ $online -eq 0 && $perc -le 50 ]]; then
+   echo -e "\x08\x01$perc%"
+elif [[ $online -eq 0 && $perc -le 70 ]]; then
+   echo -e "\x08\x01$perc%"
+elif [[ $online -eq 0 && $perc -le 100 ]]; then
+   echo -e "\x05\x01$perc%"
+else
+   echo -e "\x08\x01$perc%"
+fi
+}
+
+vol(){
+mute=`amixer get Master | grep "Mono:" | awk '{print $6}'`
+vol=`amixer get Master | grep -m 1 -o '[0-9][0-9]*%'`
+if [ $mute == "[on]" ]; then
+   echo -e "\x08\x01$vol"
+else
+   echo -e "\x07\x01"
+fi
+}
+
+net(){
+signal=`awk '/wlan0:/ {print $3}' /proc/net/wireless |sed -e 's/\.//g'`
+perc=`echo $[$signal *100 /70]`
+if [ "$perc" -gt "0" ]; then
+   echo -e "\x08\x01$perc%"
+else
+   echo -e "\x07\x01off"
+fi
+}
+
+mem(){
+mem=`free -m | awk '/Speicher:/ {printf("%dMB", $3)}'`
+echo -e "\x08\x01$mem"
+}
+
+cpu(){
+temp=`acpi -t | awk '/Thermal 0/ {printf("%d", $4)}'`
+if [ $temp -le "70" ]; then
+   echo -e "\x08\x01$temp°C"
+else
+   echo -e "\x07\x01$temp°C"
+fi
+}
+
+pac(){
+pac="$(pacman -Qqu --dbpath /tmp/checkup-db-pit/ | wc -l)"
+if [ $pac == 0 ]; then
+   echo -e "\x08\x010"
+else
+   echo -e "\x07\x01$pac"
+fi
+}
+
+# Pipe to status bar
+while true; do
+xsetroot -name "$(pac) $(cpu) $(mem) $(vol) $(net) $(bat) $(dte)"
+sleep 10
+done

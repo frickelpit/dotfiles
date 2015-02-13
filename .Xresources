@@ -1,0 +1,74 @@
+!
+! Xresources file by Frickelpit
+!
+
+!
+! --Urxvt--
+!
+
+URxvt*termName:			rxvt
+URxvt.foreground:		#ADADAD
+URxvt.background:		#000000
+URxvt.cursorColor:  		#ADADAD
+URxvt.font:			-*-termsyn-medium-*-normal-*-14-*-*-*-*-*-*-*
+URxvt*boldFont:			-*-termsyn-bold-*-normal-*-14-*-*-*-*-*-*-*
+URxvt.scrollBar: 		false
+URxvt*cursorUnderline:		true
+
+! --URL Handler-- 
+URxvt.url-select.launcher: 	firefox
+URxvt.keysym.M-u:		perl:url-select:select_next
+URxvt.perl-ext-common:  	default,url-select
+URxvt.url-select.underline: 	true
+URxvt.tabbed.tabbar-fg: 	7
+URxvt.tabbed.tabbar-bg: 	0
+URxvt.tabbed.tab-fg: 		4
+URxvt.tabbed.tab-bg: 		0
+
+!
+! --Color--
+!
+
+! Black
+URxvt*color0:    		#151515
+URxvt*color8:    		#404040
+! Red
+URxvt*color1:    		#C70031
+URxvt*color9:    		#DB2C38
+! Green
+URxvt*color2:    		#29CF13
+URxvt*color10:    		#6CE05C
+! Yellow
+URxvt*color3:    		#D4CC39
+URxvt*color11:    		#F0E84D
+! Blue
+URxvt*color4:    		#4E82AA
+URxvt*color12:    		#0C73C2
+! Magenta
+URxvt*color5:    		#7A548C
+URxvt*color13:    		#A082B2
+! Cyan
+URxvt*color6:    		#0798AB
+URxvt*color14:    		#68F2E0
+! White
+URxvt*color7:    		#E2D1E3
+URxvt*color15:    		#FFDEDE
+
+!
+! --xft--
+!
+
+Xft.dpi:                        100
+!Xcursor.theme:			Vanilla-DMZ
+
+!
+! --XFontSel-- 
+!
+
+XFontSel*sampleText.background: TEXTBG
+XFontSel*menu*showUnselectable: false
+XFontSel*MenuButton.shadowWidth: 0
+XFontSel*Toggle*ToggleStyle: check
+XFontSel*MenuButton*Justify: left
+XFontSel*MenuButton*MenuButtonStyle: select
+

@@ -1,0 +1,7 @@
+#!/bin/bash
+#this file is called by .xinitrc to start dwm
+
+while true; do
+    # Log stderror to a file 
+    dwm 2> .dwm.log
+done
