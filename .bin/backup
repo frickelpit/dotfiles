@@ -24,7 +24,6 @@ notify-send "Backup von $SRC wird gestartet"
 if [ -f $LOG ];then
   rm $LOG
 fi
-sleep 3
 for f in ~/.mozilla/firefox//.sqlite; do sqlite3 $f 'VACUUM;'; done
 rsync -avz --exclude-from=$FILE --log-file=$LOG $SRC $BDIR
 
