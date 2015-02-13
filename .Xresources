@@ -59,16 +59,3 @@ URxvt*color15:    		#FFDEDE
 !
 
 Xft.dpi:                        100
-!Xcursor.theme:			Vanilla-DMZ
-
-!
-! --XFontSel-- 
-!
-
-XFontSel*sampleText.background: TEXTBG
-XFontSel*menu*showUnselectable: false
-XFontSel*MenuButton.shadowWidth: 0
-XFontSel*Toggle*ToggleStyle: check
-XFontSel*MenuButton*Justify: left
-XFontSel*MenuButton*MenuButtonStyle: select
-
