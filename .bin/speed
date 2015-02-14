@@ -1,5 +1,6 @@
 #!/bin/bash
 # speed snapshot
+# original found at https://bitbucket.org/jasonwryan
 
 interface="wlan0"
 sys_dir="/sys/class/net/${interface}/statistics"

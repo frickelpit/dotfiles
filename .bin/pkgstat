@@ -10,7 +10,6 @@ ORPH=`pacman -Qqdt | wc -l`
 KERNEL=`uname -r`
 GCC=`gcc --version | head -n1 | cut -c 11-38`
 SETUP=`grep -i 'installed filesystem' /var/log/pacman.log | cut -c 2-17`
-#WM=`wmctrl -m | head -n1 | cut -c 7-16`
 
 echo "$ALL installed packages altogether";
 echo "$EXPL explicitly installed packages";
