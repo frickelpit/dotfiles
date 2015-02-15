@@ -30,6 +30,6 @@ set noswapfile
 
 if has("autocmd")
 	" restore Cursor position
-	"au BufReadPost * if line("'\"")>0 && line("'\"")<=line("$")|exe "normal g`\"" |endif
 	au BufReadPost * if line("'\"")>0 && line("'\"")<=line("$")|exe "normal g`\""|endif
+	au BufRead /tmp/mutt-* set tw=72
 endif
