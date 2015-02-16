@@ -4,22 +4,22 @@
 
 dte(){
 dte="$(date "+%H:%M")"
-echo -e "\x08\x01$dte"
+echo -e "\x08\x01$dte"
 }
 
 bat(){
 perc="$(</sys/class/power_supply/BAT0/capacity)"
 online="$(</sys/class/power_supply/ADP1/online)"
 if [[ $online -eq 0 && $perc -le 10 ]]; then
-   echo -e "\x07\x01$perc%"
+   echo -e "\x07\x01$perc%"
 elif [[ $online -eq 0 && $perc -le 30 ]]; then
-   echo -e "\x08\x01$perc%"
+   echo -e "\x08\x01$perc%"
 elif [[ $online -eq 0 && $perc -le 50 ]]; then
-   echo -e "\x08\x01$perc%"
+   echo -e "\x08\x01$perc%"
 elif [[ $online -eq 0 && $perc -le 70 ]]; then
-   echo -e "\x08\x01$perc%"
+   echo -e "\x08\x01$perc%"
 elif [[ $online -eq 0 && $perc -le 100 ]]; then
-   echo -e "\x05\x01$perc%"
+   echo -e "\x05\x01$perc%"
 else
    echo -e "\x08\x01$perc%"
 fi
@@ -31,7 +31,7 @@ vol=`amixer get Master | grep -m 1 -o '[0-9][0-9]*%'`
 if [ $mute == "[on]" ]; then
    echo -e "\x08\x01$vol"
 else
-   echo -e "\x07\x01"
+   echo -e "\x07\x01off"
 fi
 }
 
@@ -41,35 +41,40 @@ perc=`echo $[$signal *100 /70]`
 if [ "$perc" -gt "0" ]; then
    echo -e "\x08\x01$perc%"
 else
-   echo -e "\x07\x01off"
+   echo -e "\x07\x01off"
 fi
 }
 
 mem(){
 mem=`free -m | awk '/Speicher:/ {printf("%dMB", $3)}'`
-echo -e "\x08\x01$mem"
+echo -e "\x08\x01$mem"
+}
+
+hdd(){
+used=`df -h . | awk 'NR==2 {print $3,$5}'`
+echo -e "\x08\x01$used"
 }
 
 cpu(){
 temp=`acpi -t | awk '/Thermal 0/ {printf("%d", $4)}'`
 if [ $temp -le "70" ]; then
-   echo -e "\x08\x01$temp°C"
+   echo -e "\x08\x01$temp°C"
 else
-   echo -e "\x07\x01$temp°C"
+   echo -e "\x07\x01$temp°C"
 fi
 }
 
 pac(){
 pac="$(pacman -Qqu --dbpath /tmp/checkup-db-pit/ | wc -l)"
 if [ $pac == 0 ]; then
-   echo -e "\x08\x010"
+   echo -e "\x08\x010"
 else
-   echo -e "\x07\x01$pac"
+   echo -e "\x07\x01$pac"
 fi
 }
 
 # Pipe to status bar
 while true; do
-xsetroot -name "$(pac) $(cpu) $(mem) $(vol) $(net) $(bat) $(dte)"
-sleep 10
+   xsetroot -name "$(pac) $(cpu) $(hdd) $(mem) $(vol) $(net) $(bat) $(dte)"
+   sleep 10
 done
