@@ -45,10 +45,10 @@
     m:0x0 + c:157
     XF86Launch2 
 
-#Chat
-"gajim"
-    m:0x0 + c:156
-    XF86Launch1 
+#Remark
+"urxvtc -title mutt -e mutt"
+    m:0x0 + c:163
+    XF86Mail 
 
 #
 # End of xbindkeys configuration
