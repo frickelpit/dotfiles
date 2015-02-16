@@ -18,7 +18,6 @@ xrandr --dpi 100
 xset +fp /usr/share/fonts/local
 xset fp rehash
 # start some usefull things
-conky &
 urxvtd -q -o -f &
 xbindkeys &
 unclutter -noevents -idle 5 &
