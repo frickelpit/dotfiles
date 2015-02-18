@@ -1,12 +1,19 @@
 #!/bin/bash
-# Backup-Script mit rsync
+#####################################################
+## backup-script by Frickelpit using rsync and tar ##
+## created for learning some bash skills	   ##
+#####################################################
 
-## Einstellungen ##
+## dirs ##
 BUP="/mnt/backup"
 BDIR="/mnt/backup/mondkuchen"
 SRC="$HOME/"
+
+## files ##
 FILE="$HOME/.rsync-backupfile"
 LOG="$HOME/.backup.log"
+
+## vars ##
 DTE=`date +%F`
 PKGH=`grep ">f" $LOG | wc -l`
 
@@ -14,29 +21,30 @@ if [ ! -d $BDIR ]; then
   notify-send "Abbruch" "Zielverzeichnis nicht gefunden"
   exit;
   elif ps aux | grep [f]irefox &>/dev/null; then
-  notify-send "Achtung" "Bitte zuerst Firefox schließen"
+  notify-send "Abbruch" "Bitte zuerst Firefox schließen"
   exit;
   elif [ ! -f $FILE ]; then
   notify-send "Abbruch" "Bitte $FILE anlegen"
   exit;
 fi
 
-## Das Backup ##
 notify-send "Backup von $SRC wird gestartet"
-if [ -f $LOG ]; then
-  rm $LOG
+rm $LOG
+if [ -f $BDIR/paclist.txt ]; then
+  mv $BDIR/paclist.txt $BDIR/paclist.$DTE.txt
 fi
+pacman -Qeq > $BDIR/paclist.txt
 for f in ~/.mozilla/firefox//.sqlite; do sqlite3 $f 'VACUUM;'; done
 rsync -avz --exclude-from=$FILE --log-file=$LOG $SRC $BDIR
 
-## Check, ob Backup erfolgreich war ##
+## checking if backup succeeded ##
 if [ $? -ne 0 ]; then
   notify-send "Warnung!" "Daten konnten nicht gesichert werden!"
 else
   notify-send "Sicherung abgeschlossen" "$PKGH Datei(en) gesichert"
 fi
 
-## Erstelle ein tar.gz ##
+## creating a tar.gz ##
 tar czf $BUP/backup.$DTE.tar.gz $BDIR &>> $LOG
 if [ $? -eq 0 ]; then
   notify-send "Archiv erfolgreich angelegt"
