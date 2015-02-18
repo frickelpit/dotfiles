@@ -2,36 +2,44 @@
 # Backup-Script mit rsync
 
 ## Einstellungen ##
-BDIR="/mnt/backup/miniluna"
+BUP="/mnt/backup"
+BDIR="/mnt/backup/mondkuchen"
 SRC="$HOME/"
 FILE="$HOME/.rsync-backupfile"
 LOG="$HOME/.backup.log"
-DTE="date +%F"
+DTE=`date +%F`
 PKGH=`grep ">f" $LOG | wc -l`
 
-if [ ! -d $BDIR ];then
+if [ ! -d $BDIR ]; then
   notify-send "Abbruch" "Zielverzeichnis nicht gefunden"
   exit;
-  elif ps aux | grep [f]irefox &>/dev/null;then
+  elif ps aux | grep [f]irefox &>/dev/null; then
   notify-send "Achtung" "Bitte zuerst Firefox schließen"
   exit;
-  elif [ ! -f $FILE ];then
+  elif [ ! -f $FILE ]; then
   notify-send "Abbruch" "Bitte $FILE anlegen"
   exit;
 fi
 
 ## Das Backup ##
 notify-send "Backup von $SRC wird gestartet"
-if [ -f $LOG ];then
+if [ -f $LOG ]; then
   rm $LOG
 fi
 for f in ~/.mozilla/firefox//.sqlite; do sqlite3 $f 'VACUUM;'; done
 rsync -avz --exclude-from=$FILE --log-file=$LOG $SRC $BDIR
-tar cfv backup.$DTE.tar.gz $BDIR
 
 ## Check, ob Backup erfolgreich war ##
-if [ $? -ne 0 ];then
+if [ $? -ne 0 ]; then
   notify-send "Warnung!" "Daten konnten nicht gesichert werden!"
 else
   notify-send "Sicherung abgeschlossen" "$PKGH Datei(en) gesichert"
+fi
+
+## Erstelle ein tar.gz ##
+tar czf $BUP/backup.$DTE.tar.gz $BDIR &>> $LOG
+if [ $? -eq 0 ]; then
+  notify-send "Archiv erfolgreich angelegt"
+else
+  notify-send "Fehler" "Konnte Archiv unter $BUP nicht anlegen"
 fi
