@@ -6,6 +6,7 @@ BDIR="/mnt/backup/miniluna"
 SRC="$HOME/"
 FILE="$HOME/.rsync-backupfile"
 LOG="$HOME/.backup.log"
+DTE="date +%F"
 PKGH=`grep ">f" $LOG | wc -l`
 
 if [ ! -d $BDIR ];then
@@ -26,6 +27,7 @@ if [ -f $LOG ];then
 fi
 for f in ~/.mozilla/firefox//.sqlite; do sqlite3 $f 'VACUUM;'; done
 rsync -avz --exclude-from=$FILE --log-file=$LOG $SRC $BDIR
+tar cfv backup.$DTE.tar.gz $BDIR
 
 ## Check, ob Backup erfolgreich war ##
 if [ $? -ne 0 ];then
