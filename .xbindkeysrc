@@ -45,10 +45,15 @@
     m:0x0 + c:157
     XF86Launch2 
 
-#Remark
+#Mutt
 "urxvtc -title mutt -e mutt"
     m:0x0 + c:163
     XF86Mail 
+
+#Lockscreen
+"i3lock-wrapper -u"
+    m:0x0 + c:156
+    XF86Launch1 
 
 #
 # End of xbindkeys configuration
