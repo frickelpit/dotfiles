@@ -1,0 +1,7 @@
+#!/bin/bash
+# start mpd & mpdscribble when needed
+
+pidof mpd mpdscribble >& /dev/null
+if [ $? -ne 0 ]; then
+ mpd && mpdscribble &
+fi
