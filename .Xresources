@@ -10,8 +10,8 @@ URxvt*termName:			rxvt
 URxvt.foreground:		#ADADAD
 URxvt.background:		#000000
 URxvt.cursorColor:  		#ADADAD
-URxvt.font:			-*-ohsnap-medium-*-normal-*-14-*-*-*-*-*-*-*
-URxvt*boldFont:			-*-ohsnap-bold-*-normal-*-14-*-*-*-*-*-*-*
+URxvt.font:			-*-tamsyn-medium-*-normal-*-14-*-*-*-*-*-*-*
+URxvt*boldFont:			-*-tamsyn-bold-*-normal-*-14-*-*-*-*-*-*-*
 URxvt.scrollBar: 		false
 URxvt*cursorUnderline:		true
 
