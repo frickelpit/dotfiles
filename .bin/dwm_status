@@ -15,7 +15,7 @@ if [ ! -d $battdir ]; then
    echo -e "\x08\x01on AC"
 else
    if [[ $online -eq 0 && $perc -le 10 ]]; then
-      echo -e "\x07\x01$perc%"
+      echo -e "\x08\x07$perc%"
    elif [[ $online -eq 0 && $perc -le 30 ]]; then
       echo -e "\x08\x01$perc%"
    elif [[ $online -eq 0 && $perc -le 50 ]]; then
@@ -23,9 +23,9 @@ else
    elif [[ $online -eq 0 && $perc -le 70 ]]; then
       echo -e "\x08\x01$perc%"
    elif [[ $online -eq 0 && $perc -le 100 ]]; then
-      echo -e "\x05\x01$perc%"
+      echo -e "\x08\x05$perc%"
    else
-      echo -e "\x08\x01$perc%"
+      echo -e "\x08\x05$perc%"
    fi
 fi
 }
@@ -36,7 +36,7 @@ vol=`amixer get Master | grep -m 1 -o '[0-9][0-9]*%'`
 if [ $mute == "[on]" ]; then
    echo -e "\x08\x01$vol"
 else
-   echo -e "\x07\x01off"
+   echo -e "\x08\x07$vol"
 fi
 }
 
@@ -46,7 +46,7 @@ perc=`echo $[$signal *100 /70]`
 if [ "$perc" -gt "0" ]; then
    echo -e "\x08\x01$perc%"
 else
-   echo -e "\x07\x01off"
+   echo -e "\x08\x07off"
 fi
 }
 
@@ -65,7 +65,7 @@ temp=`acpi -t | awk '/Thermal 0/ {printf("%d", $4)}'`
 if [ $temp -le "70" ]; then
    echo -e "\x08\x01$temp°C"
 else
-   echo -e "\x07\x01$temp°C"
+   echo -e "\x08\x07$temp°C"
 fi
 }
 
@@ -74,8 +74,12 @@ pac="$(pacman -Qqu --dbpath /tmp/checkup-db-pit/ | wc -l)"
 if [ $pac == 0 ]; then
    echo -e "\x08\x010"
 else
-   echo -e "\x07\x01$pac"
+   echo -e "\x08\x07$pac"
 fi
+}
+
+sep(){
+echo -e "\x08|\x01"
 }
 
 # Pipe to status bar
