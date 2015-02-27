@@ -2,98 +2,15 @@ mpd_host = "127.0.0.1"
 mpd_port = "6600"
 mpd_music_dir = "/mnt/musik"
 playlist_disable_highlight_delay = "5"
-##### song format #####
-## for song format you can use:
-## %l - length
-## %f - filename
-## %D - directory
-## %a - artist
-## %A - album artist
-## %t - title
-## %b - album
-## %y - year
-## %n - track number (01/12 -> 01)
-## %N - full track info (01/12 -> 01/12)
-## %g - genre
-## %c - composer
-## %p - performer
-## %d - disc
-## %C - comment
-## $R - begin right alignment
-##
-## you can also put them in { } and then it will be displayed
-## only if all requested values are available and/or define alternate
-## value with { }|{ } eg. {%a - %t}|{%f}
-##
-## Note: If you want to set limit on maximal length of a tag, just
-## put the appropriate number between % and character that defines
-## tag type, e.g. to make album take max. 20 terminal cells, use '%20b'.
-##
-## Note: Format that is similar to "%a - %t" (i.e. without any additional
-## braces) is equal to "{%a - %t}", so if one of the tags is missing,
-## you'll get nothing.
-##
-## text can also have different color than the main window has,
-## eg. if you want length to be green, write $3%l$9
-##
-## available values:
-##
-## - 0 - default window color (discards all other colors)
-## - 1 - black
-## - 2 - red
-## - 3 - green
-## - 4 - yellow
-## - 5 - blue
-## - 6 - magenta
-## - 7 - cyan
-## - 8 - white
-## - 9 - end of current color
-## Note: colors can be nested.
-#
 song_list_format = "{$4%n$9} {%t} $R{$5(%b %y)$9} {%l}"
 song_status_format = "{$4%a$9} - {$5%b$9} {($5%y$9)}|{%f}"
+song_library_format = "{$4%n$9} {%t} $R{$5(%b %y)$9} {%l}"
 browser_playlist_prefix = "$3playlist$9 "
 selected_item_prefix = "$"
 selected_item_suffix = "$"
-##### columns settings #####
-##
-## syntax of song columns list format is "column column etc."
-##
-## - syntax for each column is:
-##
-## (width of column)[column's color]{displayed tag}
-##
-## Note: Width is by default in %, if you want a column to
-## have fixed size, add 'f' after the value, e.g. (10)[white]{a}
-## will be the column that take 10% of screen (so the real column's
-## width will depend on actual screen size), whereas (10f)[white]{a}
-## will take 10 terminal cells, no matter how wide the screen is.
-##
-## - color is optional (if you want the default one, type [])
-##
-## Note: You can give a column additional attributes by putting appropriate
-## character after displayed tag character. Available attributes are:
-##
-## - r - column will be right aligned
-## - E - if tag is empty, empty tag marker won't be displayed
-##
-## You can also:
-##
-## - give a column custom name by putting it after attributes,
-##   separated with character ':', e.g. {lr:Length} gives you
-##   right aligned column of lengths named "Length".
-##
-## - define sequence of tags, that have to be displayed in case
-##   predecessor is empty in a way similar to the one in classic
-##   song format, i.e. using '|' character, e.g. {a|c|p:Owner}
-##   creates column named "Owner" that tries to display artist
-##   tag and then composer and performer if previous ones are
-##   not available.
-##
-#
-#song_columns_list_format = "(5)[yellow]{n} (30)[blue]{a} (50)[]{t} (20)[yellow]{lr}"
 playlist_separate_albums = "yes"
-playlist_display_mode = "classic" (classic/columns)
+playlist_display_mode = "classic"
+browser_display_mode = "classic"
 autocenter_mode = "yes"
 centered_cursor = "yes"
 progressbar_look = ">>"
