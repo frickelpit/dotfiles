@@ -42,11 +42,16 @@ fi
 
 net(){
 signal=`awk '/wlan0:/ {print $3}' /proc/net/wireless |sed -e 's/\.//g'`
+lan="$(</sys/class/net/enp2s0/operstate)"
 perc=`echo $[$signal *100 /70]`
-if [ "$perc" -gt "0" ]; then
-   echo -e "\x08\x01$perc%"
-else
-   echo -e "\x08\x07off"
+if [ $lan == up ]; then
+   echo -e "\x08\x01on"
+else  
+   if [ $perc -gt 0 ]; then
+      echo -e "\x08\x01$perc%"
+   else
+      echo -e "\x08\x07off"
+   fi
 fi
 }
 
@@ -76,10 +81,6 @@ if [ $pac == 0 ]; then
 else
    echo -e "\x08\x07$pac"
 fi
-}
-
-sep(){
-echo -e "\x08|\x01"
 }
 
 # Pipe to status bar
