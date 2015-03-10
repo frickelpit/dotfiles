@@ -32,3 +32,6 @@ main_window_highlight_color = "blue"
 progressbar_color = "yellow"
 progressbar_elapsed_color = "blue"
 statusbar_color = "default"
+
+
+# vim: set ft=config:
