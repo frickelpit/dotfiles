@@ -14,7 +14,7 @@ fi
 # merge Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 # set DPI and font
-xrandr --dpi 100
+xrandr --dpi 125
 xset +fp /usr/share/fonts/local
 xset fp rehash
 # start some usefull things
