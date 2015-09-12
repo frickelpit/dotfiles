@@ -1,6 +1,0 @@
-#!/bin/bash
-# öffentliche IP Adresse anzeigen
-
-ip=`wget http://wieistmeineip.net -q -O - | grep -Eo '\<[[:digit:]]{1,3}(\.[[:digit:]]{1,3}){3}\>'`
-
-echo -e "$ip"
