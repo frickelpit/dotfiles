@@ -7,6 +7,7 @@ URxvt*boldFont:			-*-termsyn-bold-*-normal-*-14-*-*-*-*-*-*-*
 URxvt.scrollBar: 		false
 URxvt*cursorUnderline:		true
 URxvt*internalBorder:		10
+URxvt*scrollTtyKeypress: 	true
 
 URxvt.url-select.launcher: 	firefox
 URxvt.keysym.M-u:		perl:url-select:select_next
@@ -18,7 +19,7 @@ URxvt.tabbed.tab-fg: 		4
 URxvt.tabbed.tab-bg: 		0
 
 ! -- color -- !
-#include "/home/pit/.colors/default"
+#include "/home/pit/.colors/music"
 
 ! -- xft -- !
 Xft.dpi:                        100
@@ -26,4 +27,5 @@ Xft.autohint:			0
 Xft.hintstyle:			hintfull
 Xft.hinting:			true
 Xft.antialias:			true
+Xft.lcdfilter: 			lcddefault
 Xft.rgba:			rgb
