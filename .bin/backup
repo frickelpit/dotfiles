@@ -1,53 +1,44 @@
 #!/bin/bash
 #####################################################
-## backup-script by Frickelpit using rsync and tar ##
-## created for learning some bash skills	   ##
+## backup-script by Frickelpit using rsync ##
+## created for learning some bash skills	 ##
 #####################################################
 
 ## dirs ##
-BUP="/mnt/backup"
-BDIR="/mnt/backup/mondkuchen"
-SRC="$HOME/"
+bdir="/mnt/backup/apophis"
+src="$HOME/"
 
 ## files ##
-FILE="$HOME/.rsync-backupfile"
-LOG="$HOME/.backup.log"
+file="$HOME/.rsync-backupfile"
+log="$HOME/.backup.log"
 
 ## vars ##
-DTE=`date +%F`
-PKGH=`grep ">f" $LOG | wc -l`
+dte=$(date +%F)
+pkgh=$(grep -c ">f" "$log")
 
-if [ ! -d $BDIR ]; then
+if [ ! -d $bdir ]; then
   notify-send "Abbruch" "Zielverzeichnis nicht gefunden"
   exit;
-  elif ps aux | grep [f]irefox &>/dev/null; then
+  elif pgrep [f]irefox &>/dev/null; then
   notify-send "Abbruch" "Bitte zuerst Firefox schließen"
   exit;
-  elif [ ! -f $FILE ]; then
-  notify-send "Abbruch" "Bitte $FILE anlegen"
+  elif [ ! -f "$file" ]; then
+  notify-send "Abbruch" "Bitte $file anlegen"
   exit;
 fi
 
-notify-send "Backup von $SRC wird gestartet"
-rm $LOG
-if [ -f $BDIR/paclist.txt ]; then
-  mv $BDIR/paclist.txt $BDIR/paclist.$DTE.txt
+notify-send "Backup von $src wird gestartet"
+rm "$log"
+if [ -f $bdir/paclist.txt ]; then
+  mv $bdir/paclist.txt $bdir/paclist."$dte".txt
 fi
-pacman -Qeq > $BDIR/paclist.txt
+pacman -Qeq > $bdir/paclist.txt
 for f in ~/.mozilla/firefox//.sqlite; do sqlite3 $f 'VACUUM;'; done
-rsync -avz --exclude-from=$FILE --log-file=$LOG $SRC $BDIR
+rsync -avz --exclude-from="$file" --log-file="$log" "$src" $bdir
 
 ## checking if backup succeeded ##
 if [ $? -ne 0 ]; then
   notify-send "Warnung!" "Daten konnten nicht gesichert werden!"
 else
-  notify-send "Sicherung abgeschlossen" "$PKGH Datei(en) gesichert"
-fi
-
-## creating a tar.gz ##
-tar czf $BUP/backup.$DTE.tar.gz $BDIR &>> $LOG
-if [ $? -eq 0 ]; then
-  notify-send "Archiv erfolgreich angelegt"
-else
-  notify-send "Fehler" "Konnte Archiv unter $BUP nicht anlegen"
+  notify-send "Sicherung abgeschlossen" "$pkgh Datei(en) gesichert"
 fi
