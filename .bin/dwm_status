@@ -1,90 +1,105 @@
 #!/bin/bash
-# DWM status script
-# Colors: 1 = normal, 2 = selected, 3 = urgent, 5 = green, 6 = yellow, 7 = red, 8 = blue, 9 = cyan
+# DWM status script mostly taken from other People
+# Colors: 01 = normal, 07 = red, 08 = blue
 
 dte(){
 dte="$(date "+%H:%M")"
-echo -e "\x08\x01$dte"
+printf "%b" "\x08\x01$dte"
 }
 
 bat(){
 battdir='/sys/class/power_supply/BAT0'
 perc="$(</sys/class/power_supply/BAT0/capacity)"
-online="$(</sys/class/power_supply/ADP1/online)"
+online="$(</sys/class/power_supply/AC/online)"
 if [ ! -d $battdir ]; then
-   echo -e "\x08\x01on AC"
+   printf "%b" "\x08\x01on AC"
 else
    if [[ $online -eq 0 && $perc -le 10 ]]; then
-      echo -e "\x08\x07$perc%"
-   elif [[ $online -eq 0 && $perc -le 30 ]]; then
-      echo -e "\x08\x01$perc%"
-   elif [[ $online -eq 0 && $perc -le 50 ]]; then
-      echo -e "\x08\x01$perc%"
-   elif [[ $online -eq 0 && $perc -le 70 ]]; then
-      echo -e "\x08\x01$perc%"
+      printf "%b" "\x07\x01$perc%"
    elif [[ $online -eq 0 && $perc -le 100 ]]; then
-      echo -e "\x08\x05$perc%"
+      printf "%b" "\x08\x01$perc%"
    else
-      echo -e "\x08\x05$perc%"
+      printf "%b" "\x08\x01$perc%"
    fi
 fi
 }
 
 vol(){
-mute=`amixer get Master | grep "Mono:" | awk '{print $6}'`
-vol=`amixer get Master | grep -m 1 -o '[0-9][0-9]*%'`
-if [ $mute == "[on]" ]; then
-   echo -e "\x08\x01$vol"
+mute=$(amixer get Master | grep "Mono:" | awk '{print $6}')
+vol=$(amixer get Master | grep -m 1 -o '[0-9][0-9]*%')
+if [ "$mute" == "[on]" ]; then
+   printf "%b" "\x08\x01$vol"
 else
-   echo -e "\x08\x07$vol"
+   printf "%b" "\x07\x01$vol"
 fi
 }
 
 net(){
-signal=`awk '/wlan0:/ {print $3}' /proc/net/wireless |sed -e 's/\.//g'`
-lan="$(</sys/class/net/enp2s0/operstate)"
-perc=`echo $[$signal *100 /70]`
-if [ $lan == up ]; then
-   echo -e "\x08\x01on"
+signal=$(awk '/wlp3s0:/ {print $3}' /proc/net/wireless |sed -e 's/\.//g')
+lan="$(</sys/class/net/enp0s25/operstate)"
+wwan="$(</sys/class/net/wwp0s29u1u4i6/operstate)"
+perc=$(echo $[$signal *100 /70])
+if [ "$lan" == up ]; then
+   printf "%b" "\x08\x01LAN"
 else  
-   if [ $perc -gt 0 ]; then
-      echo -e "\x08\x01$perc%"
+   if [ "$perc" -gt 0 ]; then
+      printf "%b" "\x08\x01$perc%"
+   elif [ "$wwan" == up ]; then
+      printf "%b" "\x08\x01UMTS"
    else
-      echo -e "\x08\x07off"
+      printf "%b" "\x08\x01off"
    fi
 fi
 }
 
 mem(){
-mem=`free -m | awk '/Speicher:/ {printf("%dMB", $3)}'`
-echo -e "\x08\x01$mem"
+mem=$(free -m | awk '/Speicher:/ {printf("%dMB", $3)}')
+printf "%b" "\x08\x01$mem"
 }
 
 hdd(){
-used=`df -h | awk 'NR==2 {print $3,$5}'`
-echo -e "\x08\x01$used"
+used=$(df -h | awk '/sda/ {print $5}')
+printf "%b" "\x08\x01$used"
 }
 
 cpu(){
-temp=`acpi -t | awk '/Thermal 0/ {printf("%d", $4)}'`
-if [ $temp -le "70" ]; then
-   echo -e "\x08\x01$temp°C"
+temp=$(tlp-stat -t | awk '/CPU/ {printf $4}')
+if (( temp > 70 )); then
+   printf "%b" "\x07\x01$temp°C"
 else
-   echo -e "\x08\x07$temp°C"
+   printf "%b" "\x08\x01$temp°C"
+fi
+}
+
+fan(){
+rpm=$(tlp-stat -t | awk '/fan/ {print $3}')
+if (( rpm > 0 )); then
+   printf "%b" "\x08\x01$rpm"
+else
+   printf "%b" "\x08\x010"
 fi
 }
 
 pac(){
 pac="$(pacman -Qqu --dbpath /tmp/checkup-db-pit/ | wc -l)"
-if [ $pac == 0 ]; then
-   echo -e "\x08\x010"
+if (( pac > 0 )); then
+   printf "%b" "\x07\x01$pac"
 else
-   echo -e "\x08\x07$pac"
+   printf "%b" "\x08\x010"
+fi
+}
+
+aur(){
+ups="$(wc -l </tmp/aurupdates*)"
+if (( ups > 0 )); then
+   printf "%b" "\x07\x01$ups"
+else
+   printf "%b" "\x08\x010"
 fi
 }
 
 # Pipe to status bar
 while true; do
-   xsetroot -name "$(pac) $(cpu) $(hdd) $(mem) $(vol) $(net) $(bat) $(dte)"
+   xsetroot -name "$(pac) $(aur) $(cpu) $(hdd) $(mem) $(vol) $(net) $(bat) $(dte)"
    sleep 10
 done
