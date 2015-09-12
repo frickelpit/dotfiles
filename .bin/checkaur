@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Check for AUR updates and Aurphans
+# found at https://bitbucket.org/jasonwryan
+
+aurfile=$(mktemp -t aurupdates.XXXXXX)
+#orpfile=$(mktemp -t aurphans.XXXXXX)
+
+# remove old files
+[[ ( -e $aurfile ) ]] && rm /tmp/aurupdates*
+
+# check for updates
+/usr/bin/cower --color=never -u > "$aurfile"
+
+#/usr/bin/aurphan -a > "$orpfile"
+
