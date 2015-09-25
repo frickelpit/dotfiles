@@ -1,7 +1,7 @@
 mpd_host = "127.0.0.1"
 mpd_port = "6600"
 song_list_format = "{$4%n$9} {%t} $R{$5(%b %y)$9} {%l}"
-song_status_format = "{$4%a$9} - {$5%b$9} {($5%y$9)}|{%f}"
+song_status_format = "{$4%a$9} {($5%y$9)} - {$5%b$9}|{%f}"
 song_library_format = "{$4%n$9} {%t} $R{$5(%b %y)$9} {%l}"
 browser_playlist_prefix = "$5playlist$9 "
 selected_item_prefix = "$"
