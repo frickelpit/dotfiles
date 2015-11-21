@@ -12,7 +12,10 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # merge Xresources
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+userresources=$HOME/.Xresources
+if [ -f "$userresources" ]; then
+   xrdb -merge "$userresources"
+fi
 # set DPI and font
 xrandr --dpi 125
 xset +fp /usr/share/fonts/local
@@ -23,7 +26,7 @@ xbindkeys &
 unclutter -noevents -idle 5 &
 dunst &
 # set the Wallpaper
-sh ~/.fehbg &
+sh $HOME/.fehbg &
 # start the WM
-bash $HOME/.bin/dwm_status &
+bash $HOME/.bin/dwmbar &
 exec $HOME/.bin/startdwm
