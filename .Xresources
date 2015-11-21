@@ -2,12 +2,13 @@
 
 ! --urxvt-- !
 URxvt*termName:			rxvt
-URxvt.font:			-*-termsyn-medium-*-normal-*-14-*-*-*-*-*-*-*
-URxvt*boldFont:			-*-termsyn-bold-*-normal-*-14-*-*-*-*-*-*-*
+URxvt.font:			xft:Droid Sans Mono:size=8
+URxvt*boldFont:			xft:Droid Sans Mono:bold:size=8
 URxvt.scrollBar: 		false
 URxvt*cursorUnderline:		true
 URxvt*internalBorder:		10
 URxvt*scrollTtyKeypress: 	true
+URxvt.letterSpace: 		-1
 
 URxvt.url-select.launcher: 	firefox
 URxvt.keysym.M-u:		perl:url-select:select_next
@@ -22,7 +23,6 @@ URxvt.tabbed.tab-bg: 		0
 #include "/home/pit/.colors/music"
 
 ! -- xft -- !
-Xft.dpi:                        100
 Xft.autohint:			0
 Xft.hintstyle:			hintfull
 Xft.hinting:			true
