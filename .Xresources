@@ -23,6 +23,7 @@ URxvt.tabbed.tab-bg: 		0
 #include "/home/pit/.colors/music"
 
 ! -- xft -- !
+Xft.dpi:                        100
 Xft.autohint:			0
 Xft.hintstyle:			hintfull
 Xft.hinting:			true
