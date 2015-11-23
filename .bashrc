@@ -17,10 +17,14 @@ export HISTCONTROL=ignoreboth
 alias ls='ls --color=auto'
 alias update='sudo pacman -Syu && pacaur -u'
 alias sfetch='screenfetch -c 4 -s'
-alias repkg='makepkg -efi --skipinteg'
 alias dm='dosbox .dosbox/Doom/DOOMS/DOOM.EXE'
 alias decrypt='encfs /home/pit/.secure /home/pit/Dokumente/Privat'
 alias encrypt='fusermount -u /home/pit/Dokumente/Privat'
+# making git easier
+alias gstat='git diff --stat'
+alias gadd='git add'
+alias gcomm='git commit -m'
+alias gpush='git push origin master'
 
 # my prompt
 yellow='\[\e[0;33m\]\h'
