@@ -11,15 +11,13 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-# merge Xresources
+# merge .Xresources
 userresources=$HOME/.Xresources
 if [ -f "$userresources" ]; then
    xrdb -merge "$userresources"
 fi
-# set DPI and font
+# set DPI
 xrandr --dpi 125
-xset +fp /usr/share/fonts/local
-xset fp rehash
 # start some usefull things
 urxvtd -q -o -f &
 xbindkeys &
