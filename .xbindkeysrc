@@ -6,4 +6,9 @@
 #Lockscreen
 "i3lock-wrapper -u"
     m:0x0 + c:160
-    XF86ScreenSaver 
+    XF86ScreenSaver
+
+# VM Windows_10
+"VBoxManage startvm Windows_10"
+    m:0x0 + c:235
+    XF86Display
