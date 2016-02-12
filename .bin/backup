@@ -1,7 +1,7 @@
 #!/bin/bash
 #####################################################
-## backup-script by Frickelpit using rsync ##
-## created for learning some bash skills	 ##
+## backup-script by Frickelpit using rsync 	   ##
+## created for learning some bash skills	   ##
 #####################################################
 
 ## dirs ##
@@ -13,28 +13,28 @@ file="$HOME/.rsync-backupfile"
 log="$HOME/.backup.log"
 
 ## vars ##
-dte=$(date +%F)
-pkgh=$(grep -c ">f" "$log")
+dte="$(date +%F)"
+pkgh="$(grep -c ">f" "$log")"
 
-if [ ! -d $bdir ]; then
+if [ ! -d "$bdir" ]; then
   notify-send "Abbruch" "Zielverzeichnis nicht gefunden"
   exit;
   elif pgrep [f]irefox &>/dev/null; then
   notify-send "Abbruch" "Bitte zuerst Firefox schließen"
   exit;
   elif [ ! -f "$file" ]; then
-  notify-send "Abbruch" "Bitte $file anlegen"
+  notify-send "Abbruch" "Bitte "$file" anlegen"
   exit;
 fi
 
-notify-send "Backup von $src wird gestartet"
+notify-send "Backup von "$src" wird gestartet"
 rm "$log"
-if [ -f $bdir/paclist.txt ]; then
-  mv $bdir/paclist.txt $bdir/paclist."$dte".txt
+if [ -f "$bdir"/paclist.txt ]; then
+  mv "$bdir"/paclist.txt "$bdir"/paclist."$dte".txt
 fi
-pacman -Qeq > $bdir/paclist.txt
+pacman -Qeq > "$bdir"/paclist.txt
 for f in ~/.mozilla/firefox//.sqlite; do sqlite3 $f 'VACUUM;'; done
-rsync -avz --exclude-from="$file" --log-file="$log" "$src" $bdir
+rsync -avz --exclude-from="$file" --log-file="$log" "$src" "$bdir"
 
 ## checking if backup succeeded ##
 if [ $? -ne 0 ]; then
