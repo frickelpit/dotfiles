@@ -27,10 +27,10 @@ alias gcomm='git commit -m'
 alias gpush='git push origin master'
 
 # my prompt
-yellow='\[\e[0;33m\]\h'
+magenta='\[\e[0;35m\]\h'
 blue='\[\e[0;34m\]\w \$'
 default='\[\e[0;0m\]'
-PS1="$yellow $blue $default" 
+PS1="$magenta $blue $default" 
 
 # Extract Files
 extract() {
