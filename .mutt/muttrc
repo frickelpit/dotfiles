@@ -82,7 +82,7 @@ macro index t "c=<tab><tab><tab>"
 
 # color
 color normal default default
-color status yellow default
+color status magenta default
 color hdrdefault default default
 color message brightdefault default
 color quoted blue default
@@ -90,4 +90,4 @@ color signature green default
 color error brightred default
 color indicator blue default
 color attachment yellow default
-color tree yellow default
+color tree magenta default
