@@ -1,7 +1,11 @@
 ! -------------------------------------------------
-! Author: thayer
+! Author: Frickelpit
 ! vim:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
 ! -------------------------------------------------
+
+URxvt.foreground:   #ADADAD
+URxvt.background:   #1a0e18
+URxvt.cursorColor:  #ADADAD
 
 !black
  *color0:  #1b1d1e

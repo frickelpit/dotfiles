@@ -16,7 +16,8 @@
  *color3:  #fd971f
  *color11: #feed6c
 !blue
- *color4:  #56c2d6
+! *color4:  #56c2d6
+ *color4:  #426BB5
  *color12: #8cedff
 !magenta
  *color5:  #8c54fe
