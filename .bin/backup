@@ -34,7 +34,7 @@ if [ -f "$bdir"/paclist.txt ]; then
 fi
 pacman -Qeq > "$bdir"/paclist.txt
 for f in ~/.mozilla/firefox//.sqlite; do sqlite3 $f 'VACUUM;'; done
-rsync -avz --exclude-from="$file" --log-file="$log" "$src" "$bdir"
+rsync -avz --progress --exclude-from="$file" --log-file="$log" "$src" "$bdir"
 
 ## checking if backup succeeded ##
 if [ $? -ne 0 ]; then
