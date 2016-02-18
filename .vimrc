@@ -4,6 +4,7 @@
 
 " Syntax highlighting
 filetype plugin on
+colorscheme default
 syntax on
 
 " Basic settings
