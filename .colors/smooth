@@ -1,0 +1,31 @@
+! -------------------------------------------------
+! Author: thayer
+! vim:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
+! -------------------------------------------------
+
+!black
+ *color0:  #1b1d1e
+ *color8:  #ccccc6
+!red
+ *color1:  #a31f40
+ *color9:  #911137
+!green
+ *color2:  #7cb02c
+ *color10: #8cb83c
+!yellow
+ *color3:  #fab014
+ *color11: #edd721
+!blue
+ *color4:  #1f55b0
+ *color12: #335eff
+!magenta
+ *color5:  #a45cbd
+ *color13: #c43ee0
+!cyan
+ *color6:  #5D6F74
+ *color14: #60a6ab
+!white
+ *color7:  #b3b3b3
+ *color15: #f8f8f2
+
+
