@@ -5,13 +5,11 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# add .bin to PATH
-export PATH="${PATH}:/home/pit/.bin"
-
 # history settings
 export HISTSIZE=2000
 export HISTFILESIZE=2000
 export HISTCONTROL=ignoreboth
+export HISTIGNORE="sudo*"
 
 # making things easier
 alias ls='ls --color=auto'
@@ -20,17 +18,17 @@ alias sfetch='screenfetch -c 4 -s'
 alias dm='dosbox .dosbox/Doom/DOOMS/DOOM.EXE'
 alias decrypt='encfs /home/pit/.secure /home/pit/Dokumente/Privat'
 alias encrypt='fusermount -u /home/pit/Dokumente/Privat'
+alias equal='alsamixer -D equal'
 # making git easier
 alias gstat='git diff --stat'
 alias gadd='git add'
 alias gcomm='git commit -m'
 alias gpush='git push origin master'
-
 # my prompt
 magenta='\[\e[0;35m\]\h'
-blue='\[\e[0;34m\]\w \$'
-default='\[\e[0;0m\]'
-PS1="$magenta $blue $default" 
+blue='\[\e[0;34m\]\w\$'
+default='\[\e[0;37m\]'
+PS1="$magenta $blue$default: " 
 
 # Extract Files
 extract() {
@@ -58,7 +56,7 @@ extract() {
 }
 
 # External IP
-wmip() { printf "External IP: %s\n" $(curl -s  http://ifconfig.me/) ;}
+wmip() { printf "External IP: %s\n" $(curl -s  http://ifconfig.me/ip) ;}
 
 # Nice mount output
 nmount() { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | column -t; }
