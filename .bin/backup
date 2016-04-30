@@ -5,7 +5,8 @@
 #####################################################
 
 ## dirs ##
-bdir="/mnt/backup/apophis"
+bdir="/mnt/backup/Apophis"
+adir="/mnt/backup"
 src="$HOME/"
 
 ## files ##
@@ -13,32 +14,35 @@ file="$HOME/.rsync-backupfile"
 log="$HOME/.backup.log"
 
 ## vars ##
-dte="$(date +%F)"
+dte="$(date '+%F')"
 pkgh="$(grep -c ">f" "$log")"
 
-if [ ! -d "$bdir" ]; then
+if ! "$bdir" &>/dev/null ;then
   notify-send "Abbruch" "Zielverzeichnis nicht gefunden"
   exit;
-  elif pgrep [f]irefox &>/dev/null; then
+elif pgrep [f]irefox &>/dev/null ;then
   notify-send "Abbruch" "Bitte zuerst Firefox schließen"
   exit;
-  elif [ ! -f "$file" ]; then
-  notify-send "Abbruch" "Bitte "$file" anlegen"
+elif ! "$file" &>/dev/null ;then
+  notify-send "Abbruch" "Bitte $file anlegen"
   exit;
 fi
 
-notify-send "Backup von "$src" wird gestartet"
-rm "$log"
-if [ -f "$bdir"/paclist.txt ]; then
-  mv "$bdir"/paclist.txt "$bdir"/paclist."$dte".txt
+notify-send "Backup von $src wird gestartet…"
+> "$log"
+if [[ -f $bdir/paclist.txt ]];then
+  mv "$bdir"/paclist.txt "$bdir"/"$dte".paclist.txt
 fi
 pacman -Qeq > "$bdir"/paclist.txt
-for f in ~/.mozilla/firefox//.sqlite; do sqlite3 $f 'VACUUM;'; done
-rsync -avz --progress --exclude-from="$file" --log-file="$log" "$src" "$bdir"
-
-## checking if backup succeeded ##
-if [ $? -ne 0 ]; then
+if ! rsync -avz --progress --exclude-from="$file" --log-file="$log" "$src" "$bdir" ;then
   notify-send "Warnung!" "Daten konnten nicht gesichert werden!"
 else
   notify-send "Sicherung abgeschlossen" "$pkgh Datei(en) gesichert"
+fi
+
+notify-send "Archiv wird angelegt…"
+if ! tar cjf "$adir"/"$dte".backup.tar.bz2 "$bdir" ;then
+  notify-send "Archiv konnte nicht angelegt werden."
+else
+  notify-send "Archiv erfolgreich angelegt."
 fi
