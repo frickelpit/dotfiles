@@ -1,0 +1,105 @@
+#!/bin/bash
+# DWM status script
+ 
+## Colors ######################
+## 01 = normal	02 = selected ##
+## 03 = red	04 = green    ##
+## 05 = yellow	06 = blue     ##
+## 08 = magenta	09 = grey     ##
+################################
+
+dte(){
+dte="$(date '+%H:%M')"
+printf "%b" "\x01$dte"
+}
+
+bat(){
+battdir='/sys/class/power_supply/BAT0'
+perc="$(</sys/class/power_supply/BAT0/capacity)"
+online="$(</sys/class/power_supply/AC/online)"
+if [[ ! -d $battdir ]]; then
+   printf "%b" "\x06AC only\x01"
+else
+   if [[ $online -eq 0 && $perc -le 10 ]]; then
+      printf "%b" "\x08BAT \x01$perc"
+   elif [[ $online -eq 0 && $perc -le 100 ]]; then
+      printf "%b" "\x06BAT\x01 $perc"
+   else
+      printf "%b" "\x06AC \x01$perc"
+   fi
+fi
+}
+
+vol(){
+mute=$(amixer get Master | grep "Mono:" | awk '{print $6}')
+vol=$(amixer get Master | grep -m 1 -o '[0-9][0-9]*%'| sed 's/\%//g')
+if [[ "$mute" == "[on]" ]]; then
+   printf "%b" "\x06VOL\x01 $vol"
+else
+   printf "%b" "\x08VOL \x01$vol"
+fi
+}
+
+net(){
+signal=$(awk '/wlp3s0:/ {print $3}' /proc/net/wireless | sed 's/\.//g')
+lan="$(</sys/class/net/enp0s25/operstate)"
+wlan="$(</sys/class/net/wlp3s0/operstate)"
+perc=$(echo $[$signal *100 /70])
+if [[ "$wlan" == up ]]; then
+   printf "%b" "\x06WLAN\x01 $perc"
+else  
+   if [[ "$lan" == up ]]; then
+      printf "%b" "\x06LAN\x01"
+   else
+      printf "%b" "\x06NET OFF\x01"
+   fi
+fi
+}
+
+mem(){
+mem=$(free -m | awk '/Speicher:/ {printf("%dMB", $3)}')
+printf "%b" "\x06MEM\x01 $mem"
+}
+
+hdd(){
+used=$(df -h | awk '/sda/ {print $5}')
+printf "%b" "\x06HDD\x01 $used"
+}
+
+cpu(){
+temp=$(tlp-stat -t | awk '/CPU/ {printf $4}')
+if (( temp > 70 )); then
+   printf "%b" "\x08CPU \x01$temp°C"
+else
+   printf "%b" "\x06CPU\x01 $temp°C"
+fi
+}
+
+fan(){
+rpm=$(tlp-stat -t | awk '/fan/ {print $3}')
+printf "%b" "\x06FAN\x01 $rpm"
+}
+
+pac(){
+pac="$(pacman -Qqu --dbpath /tmp/checkup-db-pit/ | wc -l)"
+if (( pac > 0 )); then
+   printf "%b" "\x08PAC \x01$pac"
+else
+   printf "%b" "\x06PAC\x01 0"
+fi
+}
+
+aur(){
+ups="$(wc -l </tmp/aurupdates*)"
+if (( ups > 0 )); then
+   printf "%b" "\x08AUR \x01$ups"
+else
+   printf "%b" "\x06AUR\x01 0"
+fi
+}
+
+# Pipe to status bar
+while true; do
+   xsetroot -name "$(pac) • $(aur) • $(cpu) • $(fan) • $(mem) • $(vol) • $(net) • $(bat) • $(dte)"
+   sleep 10
+done
