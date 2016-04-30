@@ -41,9 +41,9 @@ auto_view text/html                                             	# view html aut
 alternative_order text/plain text/enriched text/html			# save html for last
 
 # formats
-set date_format				= "%d.%m.%y  %H:%M |"
-set index_format			= "%Z %D %-25.25F %s"
-set pager_format			= "Nachricht %C von %m %> %lL [%P]" 	# pager statusbar
+set date_format				= "%d.%m.%y  %H:%M"
+set index_format			= "%3C %X | %D %Z %-35.35F %-120.120s %> (%-3.4c)"
+set pager_format			= "Nachricht %C von %m %> %l [%P]" 	# pager statusbar
 set alias_format			= "%4n %t %-20a  %r"
 
 # composing mail
