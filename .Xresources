@@ -20,7 +20,7 @@ URxvt.tabbed.tab-fg: 		4
 URxvt.tabbed.tab-bg: 		0
 
 ! -- color -- !
-#include "/home/pit/.colors/schweitzer"
+#include "/home/pit/.colors/solarized"
 
 ! -- xft -- !
 Xft.dpi:                        100

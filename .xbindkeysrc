@@ -9,6 +9,6 @@
     XF86ScreenSaver
 
 # VM Windows_10
-"VBoxManage startvm Windows_10"
-    m:0x0 + c:235
-    XF86Display
+#"VBoxManage startvm Windows_10"
+#    m:0x0 + c:235
+#    XF86Display

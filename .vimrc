@@ -4,8 +4,8 @@
 
 " Syntax highlighting
 filetype plugin on
-colorscheme default
-syntax on
+colorscheme slate
+syntax enable
 
 " Basic settings
 set title

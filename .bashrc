@@ -12,7 +12,6 @@ export PATH="${PATH}:/home/pit/.bin"
 export HISTSIZE=2000
 export HISTFILESIZE=2000
 export HISTCONTROL=ignoreboth
-export HISTIGNORE="sudo*"
 
 # source all the aliases
 if [ -f ~/.bash_aliases ]; then
@@ -20,10 +19,14 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # my prompt
-magenta='\[\e[0;35m\]\h'
-blue='\[\e[0;34m\]\w\$'
-default='\[\e[0;37m\]'
-PS1="$magenta $blue$default " 
+red='\[\e[0;31m\]'
+green='\[\e[0;32m\]'
+yellow='\[\e[0;33m\]'
+blue='\[\e[0;34m\]'
+magenta='\[\e[0;35m\]'
+cyan='\[\e[0;36m\]'
+default='\[\e[0;0m\]'
+PS1="$magenta\h$blue\w\$$default " 
 
 # Nice mount output
 nmount() { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | column -t; }
