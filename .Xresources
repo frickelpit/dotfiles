@@ -2,8 +2,8 @@
 
 ! --urxvt-- !
 URxvt*termName:			rxvt
-URxvt.font:			xft:Droid Sans Mono:size=8
-URxvt*boldFont:			xft:Droid Sans Mono:bold:size=8
+URxvt.font:			xft:Hack:size=8
+URxvt*boldFont:			xft:Hack:bold:size=8
 URxvt.scrollBar: 		false
 URxvt*cursorUnderline:		true
 URxvt*internalBorder:		10
