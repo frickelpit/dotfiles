@@ -26,5 +26,7 @@ dunst &
 # set the Wallpaper
 sh $HOME/.fehbg &
 # start the WM
-bash $HOME/.bin/dwmbar &
+while true; do
+ slstatus
+done &
 exec $HOME/.bin/startdwm
