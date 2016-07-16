@@ -12,7 +12,9 @@ URxvt.letterSpace: 		-1
 
 URxvt.url-select.launcher: 	firefox
 URxvt.keysym.M-u:		perl:url-select:select_next
-URxvt.perl-ext-common:  	default,url-select
+URxvt.perl-ext-common:  	default,url-select,resize-font
+URxvt.resize-font.smaller:	C-Down
+URxvt.resize-font.bigger:	C-Up
 URxvt.url-select.underline: 	true
 URxvt.tabbed.tabbar-fg: 	7
 URxvt.tabbed.tabbar-bg: 	0
