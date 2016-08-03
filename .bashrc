@@ -1,5 +1,5 @@
 #
-# ~/.bashrc
+# "$HOME"/.bashrc
 #
 
 # If not running interactively, don't do anything
@@ -14,8 +14,8 @@ export HISTFILESIZE=2000
 export HISTCONTROL=ignoreboth
 
 # source all the aliases
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f "$HOME"/.bash_aliases ]; then
+    . "$HOME"/.bash_aliases
 fi
 
 # my prompt
@@ -29,5 +29,40 @@ default='\[\e[0;0m\]'
 PS1="$magenta\h $default[$blue\w$default]\n\$$default " 
 PROMPT_DIRTRIM=2
 
-# Nice mount output
-nmount() { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | column -t; }
+# functions
+nmount() { 
+(echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | column -t;
+}
+
+keygrep() {
+if [[ -f "$HOME"/dokumente/priv/keys.txt ]]; then
+   grep "$1" "$HOME"/dokumente/priv/keys.txt
+else
+   printf "No such file or directory\n"
+fi
+}
+
+gitup() {
+case "$1" in
+   uu)
+	git -C "$HOME"/admin/ubuntuusers/ansible checkout master
+	git -C "$HOME"/admin/ubuntuusers/ansible pull
+	git -C "$HOME"/admin/ubuntuusers/ubuntu-ca checkout master
+	git -C "$HOME"/admin/ubuntuusers/ubuntu-ca pull
+	;;
+   dwm)
+	git -C "$HOME"/projekte/git/dwm checkout master
+	git -C "$HOME"/projekte/git/dwm pull
+	;;
+   bar)
+	git -C "$HOME"/projekte/git/slstatus checkout master
+	git -C "$HOME"/projekte/git/slstatus pull
+	;;
+   st)
+	git -C "$HOME"/projekte/git/st pull
+	;;
+   *)
+	printf "No such repository\n"
+	;;
+esac
+}
