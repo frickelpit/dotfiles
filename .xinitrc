@@ -24,7 +24,7 @@ xbindkeys &
 unclutter -noevents -idle 5 &
 dunst &
 # set the Wallpaper
-sh $HOME/.fehbg &
+bgs $HOME/bilder/wallpaper/man-earth.png &
 # start the WM
 while true; do
  slstatus
