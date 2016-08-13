@@ -61,6 +61,10 @@ case "$1" in
    st)
 	git -C "$HOME"/projekte/git/st pull
 	;;
+   bgs)
+	git -C "$HOME"/projekte/git/bgs checkout master
+	git -C "$HOME"/projekte/git/bgs pull
+	;;
    *)
 	printf "No such repository\n"
 	;;
