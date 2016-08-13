@@ -67,17 +67,14 @@ hdr_order From: To: Cc: Date: Subject:                          	# and in this o
 source ~/.mutt/alias                                             	# required for functionality
 source ~/.mutt/pit
 source ~/.mutt/peter
-source ~/.mutt/telekom
 
 # account settings
 folder-hook $folder source ~/.mutt/pit
 folder-hook $folder source ~/.mutt/peter
-folder-hook $folder source ~/.mutt/telekom
 
 # macros
 macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.mutt/pit<enter><change-folder>!<enter>'
 macro index,pager <f3> '<sync-mailbox><enter-command>source ~/.mutt/peter<enter><change-folder>!<enter>'
-macro index,pager <f4> '<sync-mailbox><enter-command>source ~/.mutt/telekom<enter><change-folder>!<enter>'
 macro index t "c=<tab><tab><tab>"
 
 # color
