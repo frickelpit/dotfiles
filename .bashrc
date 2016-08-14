@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 # add .bin to PATH
-export PATH="${PATH}:/home/pit/.bin"
+export PATH="${PATH}:$HOME/.bin"
 
 # history settings
 export HISTSIZE=2000
