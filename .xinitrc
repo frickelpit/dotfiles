@@ -1,32 +1,43 @@
 #!/bin/sh
-#
-# ~/.xinitrc
-#
-# Executed by startx (run your window manager from here)
 
-if [ -d /etc/X11/xinit/xinitrc.d ]; then
-  for f in /etc/X11/xinit/xinitrc.d/*; do
-    [ -x "$f" ] && . "$f"
-  done
-  unset f
-fi
-
-# merge .Xresources
 userresources=$HOME/.Xresources
-if [ -f "$userresources" ]; then
-   xrdb -merge "$userresources"
+usermodmap=$HOME/.Xmodmap
+sysresources=/etc/X11/xinit/.Xresources
+sysmodmap=/etc/X11/xinit/.Xmodmap
+
+# merge in defaults and keymaps
+if [ -f $sysresources ]; then
+    xrdb -merge $sysresources
 fi
+
+if [ -f $sysmodmap ]; then
+    xmodmap $sysmodmap
+fi
+
+if [ -f "$userresources" ]; then
+    xrdb -merge "$userresources"
+fi
+
+if [ -f "$usermodmap" ]; then
+    xmodmap "$usermodmap"
+fi
+
+# start some nice programs
+
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+ for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+  [ -x "$f" ] && . "$f"
+ done
+ unset f
+fi
+
+unclutter &
 # set DPI
 xrandr --dpi 125
-# start some usefull things
-urxvtd -q -o -f &
-xbindkeys &
-unclutter -noevents -idle 5 &
-dunst &
+
 # set the Wallpaper
-bgs $HOME/bilder/wallpaper/falls.jpg &
+bgs $HOME/bilder/wallpaper/solar &
+
 # start the WM
-while true; do
- slstatus
-done &
+bash $HOME/.bin/dwmbar &
 exec $HOME/.bin/startdwm
