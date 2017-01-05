@@ -5,44 +5,37 @@
 #####################################################
 
 ## dirs ##
-bdir="/mnt/backup/Apophis"
-adir="/mnt/backup"
-src="$HOME/"
+ssh_host="pit@srv01"
+homebdir="backup/x220"
+home="$HOME/"
 
 ## files ##
-file="$HOME/.rsync-backupfile"
+homefile="$HOME/.rsync-backupfile"
 log="$HOME/.backup.log"
 
 ## vars ##
 dte="$(date '+%F')"
-pkgh="$(grep -c ">f" "$log")"
 
-if ! "$bdir" &>/dev/null ;then
-  notify-send "Abbruch" "Zielverzeichnis nicht gefunden"
-  exit;
-elif pgrep [f]irefox &>/dev/null ;then
-  notify-send "Abbruch" "Bitte zuerst Firefox schließen"
-  exit;
-elif ! "$file" &>/dev/null ;then
-  notify-send "Abbruch" "Bitte $file anlegen"
-  exit;
+if ! nmap 192.168.178.200 -p 22  |  grep "open" -q; then
+  notify-send "connection to ${ssh_host} refused"
+  exit 1;
+elif [[ ! -f "$homefile" ]]; then
+  notify-send "Aborted" "file missing"
+  exit 1;
+elif pgrep [f]irefox &>/dev/null; then
+  notify-send "Aborted" "running firefox detected, please close your browser first"
 fi
 
-notify-send "Backup von $src wird gestartet…"
+notify-send "Starting backup" "Sending files to ${ssh_host}"
 > "$log"
-if [[ -f $bdir/paclist.txt ]];then
-  mv "$bdir"/paclist.txt "$bdir"/"$dte".paclist.txt
+if [[ -f "$ssh_host:$homebdir"/.paclist.txt ]]; then
+   mv "$ssh_host:$homebdir"/paclist.txt "$ssh_host:$homebdir/$dte".paclist.txt
 fi
-pacman -Qeq > "$bdir"/paclist.txt
-if ! rsync -avz --progress --exclude-from="$file" --log-file="$log" "$src" "$bdir" ;then
-  notify-send "Warnung!" "Daten konnten nicht gesichert werden!"
-else
-  notify-send "Sicherung abgeschlossen" "$pkgh Datei(en) gesichert"
-fi
+pacman -Qeq > "$home"/.paclist.txt
+rsync -ahve ssh --numeric-ids --progress --exclude-from="$homefile" --log-file="$log" "$home" "$ssh_host:$homebdir"
 
-notify-send "Archiv wird angelegt…"
-if ! tar cjf "$adir"/"$dte".backup.tar.bz2 "$bdir" ;then
-  notify-send "Archiv konnte nicht angelegt werden."
+if [[ $? -ne 0 ]];then
+  notify-send "Error!" "Backup not completed, see $log for more info"
 else
-  notify-send "Archiv erfolgreich angelegt."
+  notify-send "Backup finished" "Files saved to ${ssh_host}"
 fi
