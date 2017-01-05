@@ -1,34 +1,34 @@
 ! --Xresources file by Frickelpit-- !
-
+!
 ! --urxvt-- !
-URxvt*termName:			rxvt
-URxvt.font:			xft:Hack:size=8
-URxvt*boldFont:			xft:Hack:bold:size=8
-URxvt.scrollBar: 		false
-URxvt*cursorUnderline:		true
-URxvt*internalBorder:		10
-URxvt*scrollTtyKeypress: 	true
-URxvt.letterSpace: 		-1
+URxvt*termName:             screen-256color
+URxvt.font:                 xft:Hack:size=9
+URxvt*boldFont:             xft:Hack:bold:size=9
+URxvt.scrollBar:            false
+URxvt*cursorUnderline:      true
+!URxvt*internalBorder:       10
+URxvt*scrollTtyKeypress:    true
+URxvt.letterSpace:          -1
 
-URxvt.url-select.launcher: 	firefox
-URxvt.keysym.M-u:		perl:url-select:select_next
-URxvt.perl-ext-common:  	default,url-select,resize-font
-URxvt.resize-font.smaller:	C-Down
-URxvt.resize-font.bigger:	C-Up
-URxvt.url-select.underline: 	true
-URxvt.tabbed.tabbar-fg: 	7
-URxvt.tabbed.tabbar-bg: 	0
-URxvt.tabbed.tab-fg: 		4
-URxvt.tabbed.tab-bg: 		0
+URxvt.url-select.launcher:  firefox
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.perl-ext-common:      default,url-select,resize-font
+URxvt.resize-font.smaller:  C-Down
+URxvt.resize-font.bigger:   C-Up
+URxvt.url-select.underline: true
+URxvt.tabbed.tabbar-fg:     7
+URxvt.tabbed.tabbar-bg:     0
+URxvt.tabbed.tab-fg:        4
+URxvt.tabbed.tab-bg:        0
 
 ! -- color -- !
-#include "/home/pit/.colors/solarized"
+#include "/home/pit/.colors/tomorrow"
 
 ! -- xft -- !
-Xft.dpi:                        100
-Xft.autohint:			0
-Xft.hintstyle:			hintfull
-Xft.hinting:			1
-Xft.antialias:			1
-Xft.lcdfilter: 			lcddefault
-Xft.rgba:			rgb
+Xft.dpi:                    100
+Xft.autohint:               0
+Xft.hintstyle:              hintfull
+Xft.hinting:                1
+Xft.antialias:              1
+Xft.lcdfilter:              lcddefault
+Xft.rgba:                   rgb
