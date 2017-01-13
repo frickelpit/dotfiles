@@ -23,6 +23,11 @@ if [[ $TERM == xterm ]]; then
     TERM=xterm-256color
 fi
 
+# source git prompt
+if [ -f /usr/share/git/completion/git-prompt.sh ]; then
+    . /usr/share/git/completion/git-prompt.sh
+fi
+
 # my prompt
 red='\[\e[0;31m\]'
 green='\[\e[0;32m\]'
@@ -31,7 +36,7 @@ blue='\[\e[0;34m\]'
 magenta='\[\e[0;35m\]'
 cyan='\[\e[0;36m\]'
 default='\[\e[0;0m\]'
-PS1="$blue\h $default[$red\w$default]\n\$$default "
+PS1='\[\e[0;34m\]\h \[\e[0;0m\][\[\e[0;31m\]\w$(__git_ps1 " \[\e[0;32m\]%s")\[\e[0;0m\]]\n\$ '
 PROMPT_DIRTRIM=2
 
 # functions
