@@ -35,8 +35,8 @@ unclutter &
 xrandr --dpi 125
 
 # set the Wallpaper
-bgs $HOME/bilder/wallpaper/solar &
+bgs $HOME/bilder/wallpaper/75856.jpg &
 
 # start the WM
-bash $HOME/.bin/dwmbar &
+slstatus -d &
 exec $HOME/.bin/startdwm
